@@ -28,7 +28,7 @@ def parse_ami_action(action_lines, ast_events):
     #print(action_list)
     try:
         event_name = ((event_list[0]).split(': '))[1]
-        #print(event_name)
+
         if event_name in ast_events:
             CALLERID_NAME, CALLERID_NUM, EXTEN = event_handler(event_list, event_name)
             #print(event_name)
