@@ -25,7 +25,6 @@ def connect_to_ast(ast_ip, ast_port):
 
 def parse_ami_action(action_lines, ast_events):
     event_list = action_lines.splitlines()
-    #print(action_list)
     try:
         event_name = ((event_list[0]).split(': '))[1]
 
@@ -69,8 +68,6 @@ if __name__ == '__main__':
 
     while True:
         data = tc.read_until(b'\n\r\n')
-        #print('__________________________________')
-        #print(data.decode())
         CALLERID_NAME, CALLERID_NUM, EXTEN, event_name = parse_ami_action(data.decode(), ast_events)
         if CALLERID_NUM:
             print(CALLERID_NAME, CALLERID_NUM, EXTEN, event_name)
