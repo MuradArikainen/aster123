@@ -15,7 +15,7 @@ def connect_to_ast(ast_ip, ast_port):
     tc.read_until(b'Asterisk Call Manager/5.0.5')
     print('Подключились!')
     tc.write(b'Action: Login\n')
-    tc.write(b'Username: murad\n')
+    tc.write(b'Username: amiuser\n')
     tc.write(b'Secret: 123456\n')
     tc.write(b'\n')
     tc.write(b'\n')
