@@ -17,4 +17,8 @@ pay_load ={
 
 result = requests.post(url=base_url,data=pay_load)
 
+print(result.json())
+data_from_ast = result.json()
+
+print(data_from_ast['caller']['name'])
 
