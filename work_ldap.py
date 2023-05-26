@@ -1,4 +1,6 @@
 from ldap3 import Server, Connection, NTLM, ALL, DIGEST_MD5, SUBTREE
+import pymysql
+import random
 
 def get_data_from_ldap(host, port, user, password, search_base):
 
@@ -50,6 +52,29 @@ if __name__ == '__main__':
     user = 'aster.local\Kostya'
     password = '123Qaz!'
     search_base = 'cn=Users,dc=aster,dc=local'
+    chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 
     user_dict = get_data_from_ldap(host, port, user, password, search_base)
+    print('!!!!!!!!!!!!!!!!!!!!!!!!')
     print(user_dict)
+
+    m_conn = pymysql.connect(host='10.10.103.233', port = 3306, user = 'ldap', password = '123456', database='testast')
+    cursor = m_conn.cursor()
+    for element in user_dict:
+        print(element)
+        print(user_dict[element])
+        if user_dict[element] != '[]':
+            select_line = f'select count(*) from sip where name = "{element}"'
+            cursor.execute(select_line)
+            result = int(cursor.fetchall()[0][0])
+            print(result)
+            if result == 0:
+                for n in range(5):
+                    passwd = ''
+                    for i in range(6):
+                        passwd += random.choice(chars)
+
+                print(passwd)
+                sql_line = f'insert into sip values ("{element}","{passwd}","{user_dict[element]}")'
+                cursor.execute(sql_line)
+    m_conn.commit()

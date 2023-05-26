@@ -31,14 +31,16 @@ print(result)
 
 print('----------------------------------------------------------------------')
 user_list = conn.entries
+user_dict = {}
 
 for user in user_list:
     #print(user)
     #print(type(user))
     print(user['name'], user['telephonenumber'])
+    user_dict[str(user['name'])] = str(user['telephonenumber'])
 
 print('----------------------------------------------------------------------')
-
+print(user_dict)
 conn.unbind()
 
 
