@@ -1,4 +1,5 @@
 from shared_func import get_config_data, connect_to_ast
+import argparse
 
 def call_to(tc, CALLERID, EXTEN):
     CH_STR = bytes('Channel: SIP/{}\n'.format(CALLERID), 'utf-8')
@@ -14,9 +15,20 @@ def call_to(tc, CALLERID, EXTEN):
     tc.write(b'\n')
     tc.write(b'\n')
 
+def parse_arg():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('CALLERID', help="Calling PN")
+    parser.add_argument('EXTEN', help="Called PN")
+    args = parser.parse_args()
+    #print(args.CALLERID)
+    #print(args.EXTEN)
+    return args.CALLERID, args.EXTEN
+
+
 if __name__ == '__main__':
     ast_ip, ast_port, ast_events = get_config_data()
     tc = connect_to_ast(ast_ip, ast_port)
-    EXTEN = '102'
-    CALLERID = '101'
+    CALLERID, EXTEN = parse_arg()
+    #EXTEN = '101'
+    #CALLERID = '102'
     call_to(tc,CALLERID,EXTEN)
